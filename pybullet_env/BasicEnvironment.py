@@ -24,15 +24,11 @@ class SoftRobotBasicEnvironment():
         self._ode = ODE()
         self.create_robot()
 
-
     def _dummy_sim_step(self,n):
         for _ in range(n):
             p.stepSimulation()
-
-
   
     def add_a_cube_without_collision(self,pos,size=[0.1,0.1,0.1], color = [0.1,0.1,0.1,1],textureUniqueId = None):
-
         # cubesID = []
         box     = p.createCollisionShape(p.GEOM_BOX, halfExtents=[size[0]/2, size[1]/2, size[2]/2])
         vis     = p.createVisualShape(p.GEOM_BOX, halfExtents=[size[0]/2, size[1]/2, size[2]/2], rgbaColor=color)
@@ -43,7 +39,6 @@ class SoftRobotBasicEnvironment():
         return obj_id 
     
     def add_a_cube(self,pos,size=[0.1,0.1,0.1],mass = 0.1, color = [1,1,0,1], textureUniqueId = None):
-
         # cubesID = []
         box     = p.createCollisionShape(p.GEOM_BOX, halfExtents=[size[0]/2, size[1]/2, size[2]/2])
         vis     = p.createVisualShape(p.GEOM_BOX, halfExtents=[size[0]/2, size[1]/2, size[2]/2], rgbaColor=color)
@@ -57,8 +52,6 @@ class SoftRobotBasicEnvironment():
         if textureUniqueId is not None:
             p.changeVisualShape(obj_id, -1, textureUniqueId=textureUniqueId)
 
-        # cubesID.append(obj_id)
-        
         p.stepSimulation()
         return obj_id 
     
@@ -127,17 +120,6 @@ class SoftRobotBasicEnvironment():
         
         
         self._robot_line_ids = []
-        # for i, pos in enumerate(positions):
-        #     p.resetBasePositionAndOrientation(self._robot_bodies[i], pos, (0, 0, 0, 1))
-        #     # Draw a line to the next body
-        #     if i < len(positions) - 1:
-        #         line_id = p.addUserDebugLine(pos, positions[i + 1], [1, 0, 0])
-        #         self._robot_line_ids.append(line_id)
-
-        # if i < len(positions) - 1:
-        #     line_id = p.addUserDebugLine(pos, positions[i + 1], [1, 0, 0],lineWidth=2,lifeTime = 0.1)
-        #     line_ids.append(line_id)
-
         self._dummy_sim_step(1)
 
     
@@ -151,21 +133,10 @@ class SoftRobotBasicEnvironment():
     def visulize (self,sol):
         idx = np.linspace(0,sol.shape[1]-1,self._number_of_sphere,dtype=int)
         positions = [(sol[0,i], sol[2,i], sol[1,i]) for i in idx]
-        # for line_id in self._robot_line_ids:
-        #     p.removeUserDebugItem(line_id)
         self._robot_line_ids = []
         for i, pos in enumerate(positions):
             p.resetBasePositionAndOrientation(self._robot_bodies[i], pos+self._base_pos, (0, 0, 0, 1))
 
-            # Draw a line to the next body
-            # if i < len(positions) - 1:
-            #     line_id = p.addUserDebugLine(pos, positions[i + 1], [1, 0, 0],lineWidth = 5,lifeTime=0.4)
-            #     self._robot_line_ids.append(line_id)
-
-            # self._dummy_sim_step(1)
-            
-        
-        
         ori = self.calculate_orientation (positions[-2],positions[-1])
         p.resetBasePositionAndOrientation(self._robot_bodies[-2], positions[-1]+self._base_pos, ori)
         p.resetBasePositionAndOrientation(self._robot_bodies[-1], positions[-1]+self._base_pos, ori)
