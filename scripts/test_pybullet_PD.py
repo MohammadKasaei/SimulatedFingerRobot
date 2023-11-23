@@ -25,39 +25,32 @@ def get_ref(gt,traj_name='Circle'):
             radius2 = 0.03
             shift = -0.02
             xd = (x0 + np.array(((shift+(radius+radius2*np.cos(w*gt))*np.cos(w*gt)),(radius+radius2*np.cos(w*gt))*np.sin(w*gt),0.00*gt)))
-            xd_dot = np.array((radius*(-w*np.sin(w*(gt)-0.5*w*np.sin(w/2*(gt)))),radius*(w*np.cos(w*(gt)-0.5*radius2*np.cos(w/2*gt))),0.00))
-            
-                
+            xd_dot = np.array((radius*(-w*np.sin(w*(gt)-0.5*w*np.sin(w/2*(gt)))),radius*(w*np.cos(w*(gt)-0.5*radius2*np.cos(w/2*gt))),0.00))                            
         elif traj_name=='Circle':
-            ################################  Circle #####################################
             T  = 50*2
             w  = 2*np.pi/T
             radius = 0.02
             xd = (x0 + np.array((radius*np.sin(w*(gt)),radius*np.cos(w*(gt)),0.00*gt)))
             xd_dot = np.array((radius*w*np.cos(w*(gt)),-radius*w*np.sin(w*(gt)),0.00))
         elif traj_name=='Helix':
-            ################################  Helix #####################################
             T  = 25
             w  = 2*np.pi/T
-            radius = 0.015
+            radius = 0.02
             xd = (x0 + np.array((radius*np.sin(w*(gt)),radius*np.cos(w*(gt)),0.0005*gt)))
             xd_dot = ( np.array((radius*w*np.cos(w*(gt)),-radius*w*np.sin(w*(gt)),0.0005)))
         elif traj_name=='Eight_Figure':
-            ################################  Eight Figure #####################################
             T  = 25*2
-            A  = 0.002
+            A  = 0.02
             w  = 2*np.pi/T
             xd = np.array((A*np.sin(w*gt) , A*np.sin((w/2)*gt),0.1))
             xd_dot = np.array((A*w*np.cos(w*gt),A*w/2*np.cos(w/2*gt),0.00))
         elif traj_name=='Moving_Eight_Figure':
-            ################################  moving Eight Figure ##################################### 
             T  = 25*2
             A  = 0.03
             w  = 2*np.pi/T
             xd = np.array(x0+(A*np.sin(w*gt) , A*np.sin((w/2)*gt),0.0002*gt))
             xd_dot = np.array((A*w*np.cos(w*gt),A*w/2*np.cos(w/2*gt),0.0002))
         elif traj_name=='Square':        
-            ################################  Square #####################################
             T  = 12.5*2
             tt = gt % (4*T)
             scale = 1
@@ -78,7 +71,6 @@ def get_ref(gt,traj_name='Circle'):
                 # t0 = time.time()+5
                 gt = 0
         elif traj_name=='Moveing_Square':        
-            ############################### Moveing Square #################################
             T  = 10.0
             tt = gt % (4*T)
             if (tt<T):
@@ -109,7 +101,6 @@ def get_ref(gt,traj_name='Circle'):
                 xd = (x0 + 1*np.array((-0.01, -0.01+((0.02/T)*(tt-(3*T))), 0.000*gt)))
                 xd_dot = 1*np.array((0, +(0.02/T), 0.000))
         elif traj_name=='Triangle':        
-            ###############################  Triangle #####################################
             T  = 12.5 *2
             tt = gt % (4*T)
             scale = 2
@@ -147,7 +138,7 @@ if __name__ == "__main__":
     q = np.array([0.0, -0.0, 0.0])
 
     ts = 0.05
-    tf = 200
+    tf = 100
     gt = 0
     x0 = np.array((0, 0, 0.1))
     endtip = np.array((0, 0, 0.1))
@@ -167,7 +158,7 @@ if __name__ == "__main__":
         dt = t - tp
         tp = t
         
-        xd, xd_dot = get_ref(gt,traj_name='Limacon')
+        xd, xd_dot = get_ref(gt,traj_name='Eight_Figure')
         if ref is None:
             ref = np.copy(xd)
         else:
