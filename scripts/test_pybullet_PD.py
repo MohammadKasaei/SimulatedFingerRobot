@@ -10,7 +10,25 @@ from softRobotCtrl.NumJac import SoftRobotControl
 
 def get_ref(gt,traj_name='Circle'):
     
-        if traj_name=='Circle':
+        if traj_name == 'Rose':
+            k = 4
+            T  = 100
+            w  = 2*np.pi/T
+            a = 0.025
+            r  = a * np.cos(k*w*gt)
+            xd = (x0 + np.array((r*np.cos(w*gt),r*np.sin(w*gt),0.00*gt)))
+            xd_dot = np.array((-r*w*np.sin(w*gt),r*w*np.cos(w*gt),0.00*gt))
+        elif traj_name == 'Limacon':
+            T  = 100
+            w  = 2*np.pi/T
+            radius = 0.02
+            radius2 = 0.03
+            shift = -0.02
+            xd = (x0 + np.array(((shift+(radius+radius2*np.cos(w*gt))*np.cos(w*gt)),(radius+radius2*np.cos(w*gt))*np.sin(w*gt),0.00*gt)))
+            xd_dot = np.array((radius*(-w*np.sin(w*(gt)-0.5*w*np.sin(w/2*(gt)))),radius*(w*np.cos(w*(gt)-0.5*radius2*np.cos(w/2*gt))),0.00))
+            
+                
+        elif traj_name=='Circle':
             ################################  Circle #####################################
             T  = 50*2
             w  = 2*np.pi/T
@@ -120,15 +138,15 @@ def get_ref(gt,traj_name='Circle'):
 if __name__ == "__main__":
 
     saveLog  = True
-    addNoise = False
-    filteringObs = False
+    addNoise = True
+    filteringObs = True
     filteringAct = False
     env = SoftRobotBasicEnvironment()
     ctrl = SoftRobotControl()
     
     q = np.array([0.0, -0.0, 0.0])
 
-    ts = 0.1
+    ts = 0.05
     tf = 200
     gt = 0
     x0 = np.array((0, 0, 0.1))
@@ -149,7 +167,7 @@ if __name__ == "__main__":
         dt = t - tp
         tp = t
         
-        xd, xd_dot = get_ref(gt,traj_name='Square')
+        xd, xd_dot = get_ref(gt,traj_name='Limacon')
         if ref is None:
             ref = np.copy(xd)
         else:
@@ -168,11 +186,8 @@ if __name__ == "__main__":
             q = 0.75*qp + q * 0.3
             qp = np.copy(q)
 
-        # ode.updateAction(q)
-        # ode.odeStepFull()
-
         if (addNoise):
-            mu, sigma = 0, 0.0005
+            mu, sigma = 0, 0.001
             xc = ee[:3]+np.squeeze(np.random.normal(mu, sigma, (1, 3)))
         else:
             xc = ee[:3]
@@ -180,7 +195,7 @@ if __name__ == "__main__":
         if (filteringObs):
             if gt < 0.01:
                 xcp = np.copy(xc)
-            xc = 0.8*xcp + xc * 0.2
+            xc = 0.9*xcp + xc * 0.1
             xcp = np.copy(xc)
 
         actions = np.vstack((actions, q))
