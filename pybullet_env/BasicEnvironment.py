@@ -73,7 +73,7 @@ class SoftRobotBasicEnvironment():
 
     def create_robot(self,number_of_sphere = 20,color = [0.6, .6, 0.6, 1],body_base_color = [0.3,0.3,0.3,1], body_base_leg_color = [0.8,0.8,0.8,1]):        
         
-        act = np.array([0,0,0.0])
+        act = np.array([0,0,0])
         self._ode.updateAction(act)
         sol = self._ode.odeStepFull()
         
@@ -128,6 +128,7 @@ class SoftRobotBasicEnvironment():
         sol = self._ode.odeStepFull()
         if vis:
             self.visulize(sol)
+        return sol[:,-1]
         
 
     def visulize (self,sol):
@@ -137,11 +138,11 @@ class SoftRobotBasicEnvironment():
         for i, pos in enumerate(positions):
             p.resetBasePositionAndOrientation(self._robot_bodies[i], pos+self._base_pos, (0, 0, 0, 1))
 
-        ori = self.calculate_orientation (positions[-2],positions[-1])
-        p.resetBasePositionAndOrientation(self._robot_bodies[-2], positions[-1]+self._base_pos, ori)
-        p.resetBasePositionAndOrientation(self._robot_bodies[-1], positions[-1]+self._base_pos, ori)
+        tip_ori = self.calculate_orientation (positions[-2],positions[-1])
+        p.resetBasePositionAndOrientation(self._robot_bodies[-2], positions[-1]+self._base_pos, tip_ori)
+        p.resetBasePositionAndOrientation(self._robot_bodies[-1], positions[-1]+self._base_pos, tip_ori)
         
-        self._dummy_sim_step(100)
+        self._dummy_sim_step(10)
         
 
     def wait(self,sec):
