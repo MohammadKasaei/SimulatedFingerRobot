@@ -1,10 +1,6 @@
 # Soft Robot Simulator
 
 
-<style>
-table, tr {border:hidden;}
-td, th {border:hidden;}
-</style>
 
 <table style="border:hidden;cellspacing=0; cellpadding=0;">
 
