@@ -34,7 +34,7 @@ Instructions on how to run the code, experiments, and reproduce results.
 ```
 python -m scripts.test_pybullet_PD
 ```
-Once everything successfully installed, you'll see the simulated robot following a circular trajectory within the PyBullet simulator.
+Once everything successfully installed, you'll see the simulated robot following a helictical square trajectory within the PyBullet simulator.
 
 ![alt](images/softRobot.gif)
 

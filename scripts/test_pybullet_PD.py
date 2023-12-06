@@ -125,7 +125,7 @@ if __name__ == "__main__":
     # traj_name = 'Limacon'
     # traj_name = 'Rose'
     # traj_name = 'Eight_Figure'
-    traj_name = 'Circle'
+    traj_name = 'Moveing_Square'
     
     q = np.array([0.0, -0.0, 0.0])
 
