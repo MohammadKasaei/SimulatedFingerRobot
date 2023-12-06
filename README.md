@@ -39,9 +39,7 @@ python -m scripts.test_pybullet_PD
 ```
 Once everything successfully installed, you'll see the simulated robot following a helictical square trajectory within the PyBullet simulator.
 
-<div align="center">
-    ![Alt](images/softRobot.gif)
-</div>
+![Alt](images/softRobot.gif)
 
 
 
