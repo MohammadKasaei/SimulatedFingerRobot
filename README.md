@@ -3,11 +3,8 @@
 
 
 <table style="border:hidden;cellspacing=0; cellpadding=0;">
-  <!-- <tr>
-    <th style="width:50%"></th>
-  </tr> -->
 <tr>
-    <td  style = "width:50%"> 
+    <td  style = "width:40%"> 
         <p align="justify">  
         This work presents a novel cable-driven soft robot capable of flexing in 3D space with an additional degree of freedom for extension and retraction. In comparison with non-extensible soft robots, the proposed robot provides a larger workspace to reach 3D targeted points. We detail the robot design and prototyping, develop a novel mathematical model for predicting the robot's motion, and employ the model to control the robot that can autonomously follow time-varying trajectories. 
         </p>
