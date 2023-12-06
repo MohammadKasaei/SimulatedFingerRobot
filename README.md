@@ -13,6 +13,8 @@
   </tr>
 </table>
 
+![alt](/images/soft_robot.jpg)
+
 # Installation and Setup
 
 ## Clone the Repository:
