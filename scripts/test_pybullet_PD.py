@@ -12,7 +12,7 @@ def get_ref(gt,traj_name='Circle'):
     
         if traj_name == 'Rose':
             k = 4
-            T  = 100
+            T  = 200
             w  = 2*np.pi/T
             a = 0.025
             r  = a * np.cos(k*w*gt)
@@ -85,21 +85,7 @@ def get_ref(gt,traj_name='Circle'):
             elif (tt<4*T):
                 xd = (x0 + 2*np.array((-0.01,-0.01+((0.02/T)*(tt-(3*T))),-0.02+0.0005*gt)))
                 xd_dot = 2*np.array((0,+(0.02/T),0.0005))
-
-            T = 10.0
-            tt = (gt % (4*T))
-            if (tt < T):
-                xd = (x0 + 1*np.array((-0.01+(0.02/T)*tt, 0.01, 0.000*gt)))
-                xd_dot = 1*np.array(((0.02/T), 0, 0.000))
-            elif (tt < 2*T):
-                xd = (x0 + 1*np.array((0.01, 0.01-((0.02/T)*(tt-T)), 0.000*gt)))
-                xd_dot = 1*np.array((0, -(0.02/T), 0.000))
-            elif (tt < 3*T):
-                xd = (x0 + 1*np.array((0.01-((0.02/T)*(tt-(2*T))), -0.01, 0.000*gt)))
-                xd_dot = 1*np.array((-(0.02/T), 0, 0.000))
-            elif (tt < 4*T):
-                xd = (x0 + 1*np.array((-0.01, -0.01+((0.02/T)*(tt-(3*T))), 0.000*gt)))
-                xd_dot = 1*np.array((0, +(0.02/T), 0.000))
+              
         elif traj_name=='Triangle':        
             T  = 12.5 *2
             tt = gt % (4*T)
@@ -126,6 +112,8 @@ def get_ref(gt,traj_name='Circle'):
         return xd,xd_dot
 
 
+
+
 if __name__ == "__main__":
 
     saveLog  = True
@@ -134,6 +122,10 @@ if __name__ == "__main__":
     filteringAct = False
     env = SoftRobotBasicEnvironment()
     ctrl = SoftRobotControl()
+    # traj_name = 'Limacon'
+    # traj_name = 'Rose'
+    # traj_name = 'Eight_Figure'
+    traj_name = 'Circle'
     
     q = np.array([0.0, -0.0, 0.0])
 
@@ -150,7 +142,7 @@ if __name__ == "__main__":
     ref = None
     
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    logFname = "logs/log_" + timestr+".dat"
+    logFname = "logs/log_" + timestr+"_"+traj_name+".dat"
     logState = np.array([])
 
     for i in range(int(tf/ts)):
@@ -158,7 +150,8 @@ if __name__ == "__main__":
         dt = t - tp
         tp = t
         
-        xd, xd_dot = get_ref(gt,traj_name='Eight_Figure')
+        xd, xd_dot = get_ref(gt,traj_name)
+       
         if ref is None:
             ref = np.copy(xd)
         else:
