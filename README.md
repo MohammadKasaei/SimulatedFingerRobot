@@ -1,7 +1,35 @@
-# SoftRobotSimulator
+# Soft Robot Simulator
 
 
+<style>
+table, tr {border:hidden;}
+td, th {border:hidden;}
+</style>
+
+<table style="border:hidden;cellspacing=0; cellpadding=0;">
+
+<!-- <style>
+th, td {
+  border-style:None;}
+</style> -->
+
+  <tr>
+    <th style="width:65%"></th>
+    <th></th>
+  </tr>
+
+
+<tr>
+   <td> <b>  <br>
+    <p align="justify">
+    
 This work presents a novel cable-driven soft robot capable of flexing in 3D space with an additional degree of freedom for extension and retraction. In comparison with non-extensible soft robots, the proposed robot provides a larger workspace to reach 3D targeted points. We detail the robot design and prototyping, develop a novel mathematical model for predicting the robot's motion, and employ the model to control the robot that can autonomously follow time-varying trajectories. 
+</p>
+ </td>
+     <td style = ""><img src="./images/soft_robot.jpg"/></td>
+ 
+  </tr>
+</table>
 
 # Installation and Setup
 
