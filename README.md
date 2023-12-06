@@ -2,19 +2,17 @@
 
 
 
-<table style="border:hidden;cellspacing=0; cellpadding=0;">
+<style>
+table, tr {border:hidden;}
+td, th {border:hidden;}
+</style>
 
-<!-- <style>
-th, td {
-  border-style:None;}
-</style> -->
+<table style="border:hidden;cellspacing=0; cellpadding=0;">
 
   <tr>
     <th style="width:50%"></th>
     <th></th>
   </tr>
-
-
 <tr>
    <td> 
     <p align="justify">
