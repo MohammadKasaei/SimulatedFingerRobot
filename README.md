@@ -10,7 +10,7 @@ th, td {
 </style> -->
 
   <tr>
-    <th style="width:65%"></th>
+    <th style="width:50%"></th>
     <th></th>
   </tr>
 
