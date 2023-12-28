@@ -11,7 +11,7 @@ This work presents a novel cable-driven soft robot capable of flexing in 3D spac
 ## Clone the Repository:
 
 ```
-git clone git@github.com:MohammadKasaei/SimulatedFingerRobot.git
+git clone https://github.com/MohammadKasaei/SimulatedFingerRobot.git
 cd SoftRobotSimulator
 ```
 ## Set Up a Virtual Environment (optional):
