@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 class SoftRobotControl():
     def __init__(self) -> None:
         # initial length of robot
-        self.l0 = 70e-3
+        self.l0 = 100e-3
         # cables offset
         self.d  = 7.5e-3
         # ode step time
