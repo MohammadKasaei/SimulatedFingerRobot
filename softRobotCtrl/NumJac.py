@@ -24,7 +24,7 @@ class SoftRobotControl():
         self.states = np.squeeze(np.asarray(y0))
         self.y0 = np.copy(self.states)
 
-    def Jac(self, q, dq=np.array((1e-3,1e-3,1e-3))):
+    def Jac(self, q, dq=np.array((1e-4,1e-4,1e-4))):
         f = self.runOdeForJac
         fx0 = f(q)
         n   = len(q)

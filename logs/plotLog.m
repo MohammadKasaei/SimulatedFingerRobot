@@ -4,8 +4,11 @@ close all;
 
 data0 = dlmread('log_20231123-163755.dat',' ');
 data0_o = dlmread('log_20231124-143525_Limacon.dat',' ');
-data1 = dlmread ('log_20231123-164159.dat',' ');
-data1_o = dlmread ('log_20231124-143800_Rose.dat',' ');
+% data1 = dlmread ('log_20231123-164159.dat',' ');
+% data1_o = dlmread ('log_20231124-143800_Rose.dat',' ');
+data1 = dlmread('log_20240115-094510_Square.dat',' ');
+data1_o = dlmread ('log_20240115-094222_Square.dat',' ');
+
 data2 = dlmread('log_20231123-164445.dat',' ');
 data2_o = dlmread('log_20231124-144220_Eight_Figure.dat',' ');
 data3 = dlmread('log_20231124-134739_Circle.dat',' ');
@@ -62,6 +65,7 @@ subplot(1,5,1)
 plot(data0(:,3),data0(:,4),'r-',LineWidth=3,DisplayName='x');
 hold on
 grid on
+box on
 plot(data0_o(:,3),data0(:,4),'b-',LineWidth=3,DisplayName='x');
 plot(data0(:,6),data0(:,7),'k--',LineWidth=2,DisplayName='xd');
 % legend
@@ -74,17 +78,19 @@ subplot(1,5,2)
 plot(data1(:,3),data1(:,4),'r-',LineWidth=3,DisplayName='x');
 hold on
 grid on
+box on
 plot(data1_o(:,3),data1_o(:,4),'b-',LineWidth=3,DisplayName='x');
 plot(data1(:,6),data1(:,7),'k--',LineWidth=2,DisplayName='xd');
 % legend
 xlabel('x [m]')
 ylabel('y [m]')
-title('Rose')
+title('Square')
 
 subplot(1,5,3)
 plot(data2(:,3),data2(:,4),'r-',LineWidth=3,DisplayName='x');
 hold on
 grid on
+box on
 plot(data2_o(:,3),data2_o(:,4),'b-',LineWidth=3,DisplayName='x');
 plot(data2(:,6),data2(:,7),'k--',LineWidth=2,DisplayName='xd');
 % legend
@@ -97,6 +103,7 @@ subplot(1,5,4)
 plot(data3(:,3),data3(:,4),'r-',LineWidth=3,DisplayName='x');
 hold on
 grid on
+box on
 plot(data3_o(:,3),data3_o(:,4),'b-',LineWidth=3,DisplayName='x');
 plot(data3(:,6),data3(:,7),'k--',LineWidth=2,DisplayName='xd');
 % legend

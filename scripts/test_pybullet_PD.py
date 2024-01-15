@@ -125,7 +125,9 @@ if __name__ == "__main__":
     # traj_name = 'Limacon'
     # traj_name = 'Rose'
     # traj_name = 'Eight_Figure'
-    traj_name = 'Moveing_Square'
+    # traj_name = 'Moveing_Square'
+    traj_name = 'Square'
+    
     
     q = np.array([0.0, -0.0, 0.0])
 
@@ -136,7 +138,7 @@ if __name__ == "__main__":
     endtip = np.array((0, 0, 0.1))
     actions = np.array((0, 0, 0))
     xc = env.move_robot(q)[:3]
-    K = 1*np.diag((2.45, 2.45, 2.45))
+    K = 0*np.diag((2.45, 2.45, 2.45))
     tp = time.time()
     t0 = tp
     ref = None
