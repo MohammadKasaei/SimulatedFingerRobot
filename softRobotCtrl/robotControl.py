@@ -95,10 +95,7 @@ class SoftRobotControl():
 
 if __name__ == "__main__":
     env = SoftRobotControl()
-    # q = np.array([0.0,-0.0,-0.0])
-    # x = env.runOdeForJac(q)
-    # print (x)
-   
+ 
     q = np.array([0.0,-0.0,-0.01])
 
     xdot = np.array((-0.0,0.0,0.))
@@ -109,7 +106,7 @@ if __name__ == "__main__":
 
     for i in range(int(tf/ts)):    
     
-        jac = env.Jac(env.runOdeForJac,q).T
+        jac = env.Jac(q).T
         pseudo_inverse = np.linalg.pinv(jac)
         t = i*ts
         w= 2*np.pi/1
@@ -119,40 +116,11 @@ if __name__ == "__main__":
         qdot = pseudo_inverse @ xdot        
         q   += (qdot * ts)
         
-        
-        # plt.plot(i*ts,env.states[0],'r*')
-        # plt.plot(i*ts,env.states[1],'g*')
-        # plt.plot(i*ts,env.states[2],'b*')
-        
         if i==0:
-
-            plt.plot(i*ts,q[0],'r*',label = 'dl')
-            plt.plot(i*ts,q[1],'go',label = 'l1')
-            plt.plot(i*ts,q[2],'bx',label = 'l2')
-            plt.xlabel ('time (s)')
-            plt.ylabel ('length (m)')
-            
-            
             logState = np.copy(env.states)
-            plt.legend()
-
-            plt.grid()
         else:
             logState =  np.vstack((logState,env.states))
-            if i%5 == 0:
-                plt.plot(i*ts,q[0],'r*')
-                plt.plot(i*ts,q[1],'go')
-                plt.plot(i*ts,q[2],'bx')
-                
-        
 
-        plt.pause(ts)
-
-        
-        
-    plt.show()    
-
-        
 
     env.visualize(logState)
         

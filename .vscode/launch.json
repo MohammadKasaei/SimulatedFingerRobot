@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python: PD-test",
             "type": "python",
             "request": "launch",
             "module": "scripts.test_pybullet_PD",
             "justMyCode": true
         },
-        {
-            "name": "Python: mppi-test",
-            "type": "python",
-            "request": "launch",
-            "module": "scripts.test_pybullet_MPPI",
-            "justMyCode": true
-        }
     ]
 }

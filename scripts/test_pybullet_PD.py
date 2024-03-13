@@ -5,7 +5,7 @@ import time
 import numpy as np
 
 import matplotlib.pyplot as plt
-from softRobotCtrl.NumJac import SoftRobotControl
+from softRobotCtrl.robotControl import SoftRobotControl
 
 
 def get_ref(gt,traj_name='Circle'):
@@ -33,11 +33,11 @@ def get_ref(gt,traj_name='Circle'):
             xd = (x0 + np.array((radius*np.sin(w*(gt)),radius*np.cos(w*(gt)),0.00*gt)))
             xd_dot = np.array((radius*w*np.cos(w*(gt)),-radius*w*np.sin(w*(gt)),0.00))
         elif traj_name=='Helix':
-            T  = 25
+            T  = 50
             w  = 2*np.pi/T
             radius = 0.02
-            xd = (x0 + np.array((radius*np.sin(w*(gt)),radius*np.cos(w*(gt)),0.0005*gt)))
-            xd_dot = ( np.array((radius*w*np.cos(w*(gt)),-radius*w*np.sin(w*(gt)),0.0005)))
+            xd = (x0 + np.array((radius*np.sin(w*(gt)),radius*np.cos(w*(gt)),0.0001*gt)))
+            xd_dot = ( np.array((radius*w*np.cos(w*(gt)),-radius*w*np.sin(w*(gt)),0.0001)))
         elif traj_name=='Eight_Figure':
             T  = 25*2
             A  = 0.02
@@ -126,19 +126,21 @@ if __name__ == "__main__":
     # traj_name = 'Rose'
     # traj_name = 'Eight_Figure'
     # traj_name = 'Moveing_Square'
-    traj_name = 'Square'
+    # traj_name = 'Square'
+    traj_name = 'Helix'
+    
     
     
     q = np.array([0.0, -0.0, 0.0])
 
     ts = 0.05
-    tf = 100
+    tf = 150
     gt = 0
     x0 = np.array((0, 0, 0.1))
     endtip = np.array((0, 0, 0.1))
     actions = np.array((0, 0, 0))
     xc = env.move_robot(q)[:3]
-    K = 0*np.diag((2.45, 2.45, 2.45))
+    K = 1*np.diag((2.45, 2.45, 2.45))
     tp = time.time()
     t0 = tp
     ref = None
