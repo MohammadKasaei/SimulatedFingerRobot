@@ -10,6 +10,11 @@ import matplotlib.pyplot as plt
 
 class SoftRobotControl():
     def __init__(self) -> None:
+        """
+        Initialize the SoftRobotControl class with default parameters.
+        Sets up the initial state of the robot including its length, cable offsets, and initial orientation.
+        """
+        
         # initial length of robot
         self.l0 = 100e-3
         # cables offset
@@ -25,6 +30,10 @@ class SoftRobotControl():
         self.y0 = np.copy(self.states)
 
     def Jac(self, q, dq=np.array((1e-4,1e-4,1e-4))):
+        """
+        Calculates the Jacobian of the system for a given state q and small changes dq in the state.
+        This is used for sensitivity analysis and control purposes.
+        """
         f = self.runOdeForJac
         fx0 = f(q)
         n   = len(q)
@@ -46,23 +55,29 @@ class SoftRobotControl():
 
 
     def odeFunction(self,s,y):
-            dydt  = np.zeros(12)
-            # % 12 elements are r (3) and R (9), respectively
-            e3    = np.array([0,0,1]).reshape(3,1)              
-            u_hat = np.array([[0,0,self.uy], [0, 0, -self.ux],[-self.uy, self.ux, 0]])
-            r     = y[0:3].reshape(3,1)
-            R     = np.array( [y[3:6],y[6:9],y[9:12]]).reshape(3,3)
-            # % odes
-            dR  = R @ u_hat
-            dr  = R @ e3
-            dRR = dR.T
-            dydt[0:3]  = dr.T
-            dydt[3:6]  = dRR[:,0]
-            dydt[6:9]  = dRR[:,1]
-            dydt[9:12] = dRR[:,2]
-            return dydt.T
+        """
+        Defines the differential equations for the soft robot dynamics. It calculates the derivative of the state vector.
+        """        
+        dydt  = np.zeros(12)
+        # % 12 elements are r (3) and R (9), respectively
+        e3    = np.array([0,0,1]).reshape(3,1)              
+        u_hat = np.array([[0,0,self.uy], [0, 0, -self.ux],[-self.uy, self.ux, 0]])
+        r     = y[0:3].reshape(3,1)
+        R     = np.array( [y[3:6],y[6:9],y[9:12]]).reshape(3,3)
+        # % odes
+        dR  = R @ u_hat
+        dr  = R @ e3
+        dRR = dR.T
+        dydt[0:3]  = dr.T
+        dydt[3:6]  = dRR[:,0]
+        dydt[6:9]  = dRR[:,1]
+        dydt[9:12] = dRR[:,2]
+        return dydt.T
 
-    def runOdeForJac(self,q):        
+    def runOdeForJac(self,q):    
+        """
+        Solves the ODE to find the robot's state given the input parameters. This is specifically used to assist in calculating the Jacobian.
+        """           
         l  = self.l0 + q[0]
         self.uy = (q[1]) / (l *self.d)
         self.ux = (q[2]) / -(l*self.d)
@@ -75,6 +90,9 @@ class SoftRobotControl():
         return self.states[0:3]
 
     def visualize(self,state):
+        """
+        Visualizes the robot's trajectory in 3D space using matplotlib.
+        """        
         fig = plt.figure()
         ax  = fig.add_subplot(projection='3d')
         ax.scatter (state[:,0],state[:,1],state[:,2], c = 'g', label='robot')
