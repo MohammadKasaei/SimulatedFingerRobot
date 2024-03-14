@@ -5,7 +5,7 @@ import time
 import numpy as np
 
 import matplotlib.pyplot as plt
-from softRobotCtrl.robotControl import SoftRobotControl
+from softRobotCtrl.robotControlOpenLoop import SoftRobotControl
 
 
 def get_ref(gt,traj_name='Circle'):
