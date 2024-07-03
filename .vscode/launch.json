@@ -18,5 +18,12 @@
             "module": "scripts.test_pybullet_PD",
             "justMyCode": true
         },
+        {
+            "name": "Python: MPC-test",
+            "type": "python",
+            "request": "launch",
+            "module": "softRobotCtrl.robotControlClosedLoop_MPC",
+            "justMyCode": true
+        },
     ]
 }
