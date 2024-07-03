@@ -18,12 +18,7 @@ class MPCController():
         self.Np = 25
         self.gt = 0
         self.sim_time = 0
-        self.obsPos1 = None
-        self.obsPos2 = None
-        self.obsPos3 = None
-        self.obsPos4 = None
         
-
         self.udateSystem(jac=np.zeros((3,3)))
         
         self.umin = 0.5*np.array([-0.01,-0.01,-0.01]) 
@@ -33,18 +28,14 @@ class MPCController():
         self.xmax = np.array([ 0.05 , 0.05, 0.15])
 
 
-
     def udateSystem(self, jac):
-       
         self.Ad = np.matrix([[1, 0, 0],
                             [0, 1, 0],
                             [0, 0, 1]])
-
         self.Bd = jac*self.ts
         
-
         
-    def u_MPC(self,x0):
+    def ctrl(self,x0):
 
         [nx, nu] = self.Bd.shape # number of states and number or inputs
         
@@ -95,69 +86,6 @@ class MPCController():
         # Apply first control input to the plant
         uMPC = res.x[-Np * nu:-(Np - 1) * nu]
         return uMPC
-
-
-
-    def ode_fcn(self,t,x):    
-        u = np.matrix(self.u_MPC())
-        checkNone = True if u[0,0] is None or u[0,1] is None or u[0,2] is None else False
-        if checkNone:
-            u = self.lastU            
-        self.lastU = np.copy(u)
-        self.u = np.copy(u)
-        dxdt = self.Bd@(u.T)
-        return dxdt.T
-
-
-    def ode_step(self):
-        stime          = (self.sim_time,self.sim_time+self.ts)
-        t_eval         = np.array([stime[1]]) #np.linspace(t0, tfinal, int(tfinal/ts))
-        sol            = solve_ivp(self.ode_fcn,stime,self.states,t_eval=t_eval)
-        self.sim_time += self.ts
-        self.states    = [y[0] for y in sol.y]
-        #print ("t: {0}, states: {1}".format(self.sim_time,self.states))
-        return self.states
-
-
-    def run_sim_steps(self,ref,x0,t0,ts,tfinal):  
-        y = x0
-        self.states = np.copy(x0)
-        for n in range(int(tfinal/ts)):
-            tfinal   = t0+ts
-            sim_time = (t0,tfinal)
-            self.ts  = ts
-            t_eval   = np.array([t0+ts])#np.linspace(t0, tfinal, int(tfinal/ts))
-            self.ref = np.array([1,0.0,2,0., 1.5,0.]) #ref
-            
-            sol      = solve_ivp(self.ode_fcn,sim_time,x0,t_eval=t_eval)
-            x0 = [y[0] for y in sol.y]
-            self.states    = [y[0] for y in sol.y]
-           
-
-            t0 +=ts
-        
-            if (n):
-                yn = np.array([y[0] for y in sol.y])
-                y = np.append(y,[yn],axis=0)
-            else:
-                y = [np.array([y[0] for y in sol.y])]
-                
-        self.animation_states = y.T
-
-        return y.T
-
-    def singleODEStep(self,):
-        u = np.matrix(self.u_MPC())
-        checkNone = True if u[0,0] is None or u[0,1] is None or u[0,2] is None else False
-        if checkNone:
-            u = self.lastU            
-        self.lastU = np.copy(u)
-        self.u = np.copy(u)
-        self.states = self.states + self.Bd@(u.T)*self.ts
-        self.sim_time += self.ts
-        
-        return np.array(self.states)
-
 
 
 class robotModel():
@@ -251,7 +179,6 @@ class robotModel():
         t_eval               = np.linspace(0, l, int(l/self.ds))
         sol                  = solve_ivp(self.odeFunction,cableLength,self.y0,t_eval=t_eval)
         self.states          = np.squeeze(np.asarray(sol.y[:,-1]))
-        #print ("t: {0}, states: {1}".format(self.sim_time,self.states))
         return self.states[0:3]
     
 
@@ -335,7 +262,7 @@ if __name__ == "__main__":
 
         jac = robot.Jac(q).T
         mpc.udateSystem(jac)
-        qdot = mpc.u_MPC(xc)
+        qdot = mpc.ctrl(xc)
         q += (qdot * ts)
         
         robot.updateAction(q)
