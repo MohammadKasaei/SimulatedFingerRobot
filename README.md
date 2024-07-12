@@ -46,7 +46,7 @@ Once everything successfully installed, you'll see the simulated robot following
 
 # License
 This project is licensed under the MIT License.
-
+<!-- 
 # Acknowledgments
-This work is supported by EU H2020 project Enhancing Healthcare with Assistive Robotic Mobile Manipulation (HARMONY, 101017008) and the Medical Research Council [MR/T023252/1].
+This work is supported by EU H2020 project Enhancing Healthcare with Assistive Robotic Mobile Manipulation (HARMONY, 101017008) and the Medical Research Council [MR/T023252/1]. -->
 
