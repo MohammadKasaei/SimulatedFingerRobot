@@ -14,8 +14,8 @@ import osqp
 class MPCController():
     def __init__(self) -> None:
         
-        self.ts = 0.02
-        self.Np = 25
+        self.ts = 0.05
+        self.Np = 20
         self.gt = 0
         self.sim_time = 0
         
